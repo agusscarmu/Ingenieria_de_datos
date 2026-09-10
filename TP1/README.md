@@ -29,7 +29,7 @@ oficial de GDELT y la interpretación final son de elaboración propia.
 ## Ejecución
 
 ```bash
-pip install pandas numpy requests
+pip install pandas numpy requests matplotlib
 jupyter notebook TP1.ipynb
 ```
 
