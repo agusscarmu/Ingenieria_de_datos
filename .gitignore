@@ -1,2 +1,4 @@
 .env
 .DS_Store
+TP2/data/
+__pycache__/
