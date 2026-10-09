@@ -1,0 +1,5 @@
+# Datos: se regeneran con `python -m src.pipeline`
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep

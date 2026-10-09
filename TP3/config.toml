@@ -1,0 +1,42 @@
+# Configuración del TP3 — Análisis multivariante de GDELT 2.0
+# Todas las rutas son relativas a la carpeta raíz del TP (donde está este archivo).
+
+[ingesta]
+# Día analizado (UTC, según DATEADDED). Fijo para que el resultado sea reproducible.
+fecha = "2026-10-05"
+archivos_por_dia = 96          # 24 h x 4 (uno cada 15 min)
+max_workers = 16               # descargas concurrentes
+url_base = "http://data.gdeltproject.org/gdeltv2"
+url_lookups = "https://www.gdeltproject.org/data/lookups"
+
+[rutas]
+raw = "data/raw"
+processed = "data/processed"
+almacen = "data/processed/gdelt_dw.sqlite"
+eventos = "data/processed/eventos.parquet"
+matriz = "data/processed/matriz.parquet"
+
+[matriz]
+# Variables continuas (nombres de la vista v_eventos_analisis)
+continuas = ["goldstein_scale", "avg_tone", "num_mentions", "num_sources", "num_articles"]
+# Conteos muy asimétricos: se les aplica log(1 + x) antes del análisis
+log1p = ["num_mentions", "num_sources", "num_articles"]
+# Variables categóricas a codificar como indicadoras
+categoricas = ["actor1_tipo", "actor2_tipo", "tipo_interaccion", "evento_raiz"]
+# Variable que define los grupos para los vectores de medias "por país"
+grupo = "pais_accion"
+# Umbral de frecuencia relativa por debajo del cual una categoría pasa a 'OTHER'
+umbral_otros = 0.05
+etiqueta_otros = "OTHER"
+# Categoría que se toma como referencia (se descarta su indicadora). "" = conservar todas.
+referencia_dummy = "OTHER"
+
+[multivariante]
+top_paises = 12                # países con más eventos para los vectores de medias / correlaciones
+min_eventos_pais = 500
+
+[acp]
+varianza_objetivo = 0.80       # criterio de varianza acumulada
+muestra_biplot = 6000          # observaciones dibujadas en el biplot
+alfa_outliers = 0.001          # umbral chi-cuadrado para T² de Hotelling
+semilla = 42
