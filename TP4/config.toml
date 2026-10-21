@@ -1,0 +1,58 @@
+# Configuración del TP4 — Detección de eventos atípicos en GDELT 2.0
+# Todas las rutas son relativas a la carpeta raíz del TP (donde está este archivo).
+
+[ingesta]
+# Ventana de 7 días completos (UTC, según el timestamp del archivo = DATEADDED).
+# Se fija la fecha final para que el resultado sea reproducible.
+fecha_fin = "2026-10-19"
+dias = 7
+max_workers = 16               # descargas concurrentes
+url_masterfilelist = "http://data.gdeltproject.org/gdeltv2/masterfilelist.txt"
+url_lookups = "https://www.gdeltproject.org/data/lookups"
+
+[rutas]
+raw = "data/raw"
+processed = "data/processed"
+manifiesto = "data/raw/manifiesto_export.csv"
+obt = "data/processed/obt_eventos.parquet"
+eventos_limpios = "data/processed/eventos_limpios.parquet"
+matriz = "data/processed/matriz.parquet"
+scores = "data/processed/acp_scores.parquet"
+atipicos = "data/processed/eventos_atipicos.parquet"
+atipicos_csv = "data/processed/eventos_atipicos.csv"
+
+[limpieza]
+# Columnas con más de esta proporción de nulos se descartan del análisis (siguen en la OBT).
+# Los nulos estructurales de los actores (hasta ~67 %) no se descartan: se recodifican.
+umbral_nulos_columna = 0.90
+# Medidas sin las cuales un evento no se puede analizar: si faltan, se descarta la fila
+obligatorias = ["GlobalEventID", "EventCode", "EventRootCode", "QuadClass", "GoldsteinScale",
+                "AvgTone", "NumMentions", "NumSources", "NumArticles", "Day", "DATEADDED"]
+# Near Zero Variance en numéricas: coeficiente de variación mínimo
+cv_minimo = 0.05
+
+[matriz]
+# Variables continuas (nombres de la OBT); los conteos entran como log(1 + x).
+# NumArticles queda afuera: r ≈ 0,99 con NumMentions (redundancia por construcción).
+continuas = ["GoldsteinScale", "AvgTone", "NumMentions", "NumSources", "LagDays"]
+log1p = ["NumMentions", "NumSources", "LagDays"]
+binarias = ["IsRootEvent"]
+# Variables categóricas a codificar como indicadoras. QuadClass queda afuera: el codebook la
+# define a partir de EventRootCode y sus indicadoras son combinación lineal exacta de las de la raíz.
+categoricas = ["EventRootDesc", "Actor1Type", "Actor2Type",
+               "ActionGeo_TypeDesc", "ActionGeo_CountryName"]
+# Umbral de frecuencia relativa por debajo del cual una categoría pasa a 'OTHER'
+umbral_otros = 0.05
+etiqueta_otros = "OTHER"
+# Categoría de referencia (se descarta su indicadora para evitar la trampa de las dummies)
+referencia_dummy = "OTHER"
+
+[acp]
+varianza_objetivo = 0.80       # criterio de varianza acumulada
+muestra_horn = 50000           # filas usadas en el análisis paralelo de Horn
+repeticiones_horn = 20
+semilla = 42
+
+[atipicos]
+alfa = 0.001                   # nivel para los límites de T² de Hotelling y del SPE (Q)
+top_investigar = 25            # eventos con mayor puntaje que se muestran para investigar
