@@ -1,0 +1,8 @@
+# Todo lo que está en data/ se genera al correr el cuaderno: no se versiona
+data/raw/*
+data/db/*
+!data/**/.gitkeep
+
+.ipynb_checkpoints/
+__pycache__/
+.venv/

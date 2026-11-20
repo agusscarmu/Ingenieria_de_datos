@@ -1,0 +1,17 @@
+# wfdb y dash no vienen en Colab: van con versión exacta. numpy, pandas, plotly, matplotlib y scipy sí vienen: van en
+# rangos, para que pip deje la versión de Colab si está dentro del rango. De cada rango se probaron los extremos que se
+# nombran abajo, no cada versión intermedia.
+# wfdb pide pandas>=2.2.3
+wfdb==4.3.1
+# dash: la versión con la que se probó el tablero dentro del cuaderno (jupyter_mode="inline")
+dash==4.5.0
+# numpy: probadas la 2.0.2 y la 2.5.5
+numpy>=2.0.2,<3
+# pandas: el piso lo pone wfdb (con un pandas más viejo, pip lo actualiza); probadas la 2.2.3 y la 3.1.1
+pandas>=2.2.3,<4
+# plotly: probadas la 5.24.1 y la 7.1.0
+plotly>=5.24.1,<8
+# matplotlib (la figura fija con las 17): probadas la 3.10.0 y la 3.11.2
+matplotlib>=3.10.0,<4
+# scipy (el Wilcoxon de día contra noche): probadas la 1.16.3 y la 1.18.1
+scipy>=1.16.3,<2
