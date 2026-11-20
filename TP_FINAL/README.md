@@ -4,13 +4,17 @@ Trabajo final de Ingeniería de datos. Proceso completo de ETL sobre Holter de 2
 
 [![Abrir en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/agusscarmu/Ingenieria_de_datos/blob/master/TP_FINAL/notebooks/tp_final.ipynb)
 
+Cuaderno en Colab: <https://colab.research.google.com/github/agusscarmu/Ingenieria_de_datos/blob/master/TP_FINAL/notebooks/tp_final.ipynb>
+
 ## Datos
 
 [SHDB-AF v1.0.1](https://physionet.org/content/shdb-af/1.0.1/) (PhysioNet): 128 Holter de ~24 h de 122 pacientes, 200 Hz, 2 canales, con datos clínicos y, en 98, el ritmo anotado. Licencia Open Data Commons Attribution 1.0. El cuaderno los baja solo; no hace falta subir nada.
 
 ## Cómo correrlo
 
-Abrir el cuaderno con el botón de arriba y ejecutar todo. La primera celda clona este repositorio para poder importar el código de `src/`.
+Abrir el cuaderno en Colab (el botón o el link de arriba) y elegir Entorno de ejecución › Ejecutar todo. Colab avisa que el cuaderno no lo creó Google: hay que confirmar con "Ejecutar de todos modos". La primera celda clona este repositorio, para poder importar el código de `src/`, e instala lo de `requirements.txt`.
+
+En Colab corre entero en unos 15 minutos (probado el 2026-11-20): lo más largo es leer los 111 Holter (unos 4 minutos) y armar el almacén (unos 6). El tablero aparece al final, dentro del cuaderno.
 
 ## Estructura
 
