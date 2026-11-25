@@ -37,6 +37,7 @@ TP_FINAL/
 ├── data/                    se genera al correr el cuaderno (no se versiona)
 │   ├── raw/                 SHDB-AF tal como se baja
 │   └── db/                  transaccional.sqlite y almacen.sqlite
+├── img/                     diagramas de las dos bases (los muestra el cuaderno)
 ├── presentacion/            PDF de la defensa
 └── requirements.txt
 ```
